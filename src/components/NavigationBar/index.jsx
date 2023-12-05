@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import LeftNav from './LeftNav'
 import SearchBar from './SearchBar'
 import RightNav from './RightNav'
@@ -6,9 +6,11 @@ import { BiArrowBack } from 'react-icons/bi'
 import { ImSearch } from 'react-icons/im'
 import { MdKeyboardVoice } from 'react-icons/md'
 import useWindowSize from '../../helpers/useWindowSize'
+import { SearchContext } from '../../context/SearchContxt'
 
 const NavigationBar = () => {
   const { width } = useWindowSize();
+  const { showSpecialSearchBar, setShowSpecialSearchBar } = useContext(SearchContext);
 
   const specialSearchBarRender = (
     <div className='special_searchbar'>
@@ -17,7 +19,10 @@ const NavigationBar = () => {
       </button>
       <form>
         <input type='text' name='search' placeholder='검색' autoComplete='false'/>
-        <button type='submit'>
+        <button
+          type='submit'
+          onClick={() => setShowSpecialSearchBar(false)}
+        >
           <ImSearch size={20} data-tooltip-content='검색' data-tooltip-id='navbar'/>
         </button>
       </form>
@@ -30,13 +35,13 @@ const NavigationBar = () => {
   return (
     <nav className='Navbar'>
       {
-        width <= 640 
-          ? specialSearchBarRender
-          : <>
+        width <= 640 && showSpecialSearchBar ? 
+          specialSearchBarRender : 
+          <>
               <LeftNav />
-              <SearchBar />
-              <RightNav />
-            </>
+            <SearchBar />
+            <RightNav />
+          </>
       }
     </nav>
   )

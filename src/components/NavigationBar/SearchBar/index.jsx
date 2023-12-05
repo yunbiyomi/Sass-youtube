@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ImSearch } from 'react-icons/im'
 import { MdKeyboardVoice } from 'react-icons/md'
 import { Tooltip } from 'react-tooltip'
 import useWindowSize from '../../../helpers/useWindowSize'
+import { SearchContext } from '../../../context/SearchContxt'
 
 const SearchBar = () => {
   const { width } = useWindowSize();
+  const { setShowSpecialSearchBar } = useContext(SearchContext);
 
   return (
     <div className={`SearchBar ${width <= 640 ? 'smallSearch' : ''}`}>
@@ -19,7 +21,10 @@ const SearchBar = () => {
             </button>
           </form>
         ) :
-        <button className='icon-container searchIcon'>
+        <button 
+          className='icon-container searchIcon'
+          onClick={() => setShowSpecialSearchBar(true)}
+        >
           <ImSearch size={20} data-tooltip-content='검색' data-tooltip-id='navbar'/>
         </button>
       }
