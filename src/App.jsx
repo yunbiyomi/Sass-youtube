@@ -23,9 +23,9 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route index element={<MainPage />} />
-          <Route path='/results/:input' element={<SearchedVideosPage />} />
-          <Route path='/video/:videoId' element={<VideoPage />} />
+          <Route index element={<MainPage />}></Route>
+          <Route path='/results/:input' element={<SearchedVideosPage />}></Route>
+          <Route path='/video/:videoId' element={<VideoPage />}></Route>
         </Route>
       </Routes>
     </>
