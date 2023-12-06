@@ -6,7 +6,7 @@ import { BiArrowBack } from 'react-icons/bi'
 import { ImSearch } from 'react-icons/im'
 import { MdKeyboardVoice } from 'react-icons/md'
 import useWindowSize from '../../helpers/useWindowSize'
-import { SearchContext } from '../../context/SearchContxt'
+import { SearchContext } from '../../context/SearchContext'
 
 const NavigationBar = () => {
   const { width } = useWindowSize();

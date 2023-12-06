@@ -3,7 +3,7 @@ import { ImSearch } from 'react-icons/im'
 import { MdKeyboardVoice } from 'react-icons/md'
 import { Tooltip } from 'react-tooltip'
 import useWindowSize from '../../../helpers/useWindowSize'
-import { SearchContext } from '../../../context/SearchContxt'
+import { SearchContext } from '../../../context/SearchContext'
 
 const SearchBar = () => {
   const { width } = useWindowSize();
