@@ -35,14 +35,11 @@ const SearchBar = () => {
 
       <Tooltip 
         id='navbar'
+        className='tooltip_navbar'
         place='bottom'
         effect='solid'
         delayHide={150}
         arrowColor='transparent'
-        style={{
-          backgroundColor:'gray',
-          padding:'8px'
-        }}
       />
     </div>
   )
