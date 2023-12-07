@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { getVideoInfo } from '../../helpers/fetchingData';
 
 const MainPage = () => {
-  const storedVideos = JSON.parse(localStorage.getItem('mainVideos'));
+  let storedVideos;
   const [mainVideos, setMainVideos] = useState(storedVideos || []);
 
   const getMainVideos = useCallback(async() => {
@@ -13,8 +13,8 @@ const MainPage = () => {
         let videosArray = await response.data.items;
         videosArray = await getVideoInfo(videosArray);
         setMainVideos(videosArray);
-
         localStorage.setItem('mainVideos', JSON.stringify(videosArray));
+        console.log(mainVideos);
       }
     } catch (error) {
       console.log(error);
