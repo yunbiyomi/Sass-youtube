@@ -1,6 +1,7 @@
 import axios from '../../api/axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getVideoInfo } from '../../helpers/fetchingData';
+import VideoCard from '../../components/VideoCard';
 
 const MainPage = () => {
   let storedVideos;
@@ -14,7 +15,7 @@ const MainPage = () => {
         videosArray = await getVideoInfo(videosArray);
         setMainVideos(videosArray);
         localStorage.setItem('mainVideos', JSON.stringify(videosArray));
-        console.log(mainVideos);
+        storedVideos = JSON.parse(localStorage.getItem('mainVideos'));
       }
     } catch (error) {
       console.log(error);
@@ -26,7 +27,21 @@ const MainPage = () => {
   }, [getMainVideos])
 
   return (
-    <div>MainPage</div>
+    <section className='mainGallary'>
+      {
+        mainVideos.map(video => (
+          <VideoCard
+            key={video.id.videoId}
+            id={video.id.videoId}
+            video={video}
+            img={video.snippet.thumbnails.medium.url}
+            info={video.snippet}
+            eInfo={video.extraInfo}
+            channelInfo={video.channelInfo}
+          />
+        ))
+      }
+    </section>
   )
 }
 
