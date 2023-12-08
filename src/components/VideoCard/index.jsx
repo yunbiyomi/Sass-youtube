@@ -12,7 +12,7 @@ const VideoCard = (id, video) => {
           {
             id.eInfo.duration 
               ?
-                <div>
+                <div className='video_duration'>
                   <span>{id.eInfo.duration}</span>
                 </div>
               : null
@@ -43,15 +43,16 @@ const VideoCard = (id, video) => {
                 </div>
               </Link>
               <div className="video_metadata">
-                <span>{id.eInfo.viewCount}views &nbsp; </span>
+                <span>{id.eInfo.viewCount}views </span> &nbsp;
                 <span className='dot_separator'>&#8226;</span> &nbsp;
                 <span>{id.info.publishedAt}</span>
               </div>
             </div>
           </div>
-        </div>
-        <div className='dots_container'>
+
+          <div className='dots_container'>
           <BiDotsVerticalRounded  size={25} className='dots' />
+          </div>
         </div>
       </Link>
     </div>

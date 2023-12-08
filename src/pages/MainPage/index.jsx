@@ -27,7 +27,7 @@ const MainPage = () => {
   }, [getMainVideos])
 
   return (
-    <section className='mainGallary'>
+    <section className='mainGallery'>
       {
         mainVideos.map(video => (
           <VideoCard
