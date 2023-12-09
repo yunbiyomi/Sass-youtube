@@ -4,12 +4,15 @@ import { BiDotsVerticalRounded } from 'react-icons/bi'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import formatViews from '../../helpers/formatViews'
+import formatTimeVideo from '../../helpers/formatTimeVideo'
 
 const VideoCard = (id, video) => {
   dayjs.extend(relativeTime);
-  const time = dayjs(id.info.id.info.publishedAt).fromNow(true);
+  const time = dayjs(id.info.publishedAt).fromNow(true);
   
   const views = formatViews(id.eInfo.viewCount);
+
+  const duration = formatTimeVideo(id.eInfo.duration);
 
   return (
     <div className='videoCard'>
@@ -20,7 +23,7 @@ const VideoCard = (id, video) => {
             id.eInfo.duration 
               ?
                 <div className='video_duration'>
-                  <span>{id.eInfo.duration}</span>
+                  <span>{duration}</span>
                 </div>
               : null
           }
