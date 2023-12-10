@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
@@ -6,21 +7,19 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import formatViews from '../../helpers/formatViews'
 import formatTimeVideo from '../../helpers/formatTimeVideo'
 
-const VideoCard = (id, video) => {
+const VideoCard = ({ id, video, img, info, eInfo, channelInfo }) => {
   dayjs.extend(relativeTime);
-  const time = dayjs(id.info.publishedAt).fromNow(true);
-  
-  const views = formatViews(id.eInfo.viewCount);
-
-  const duration = formatTimeVideo(id.eInfo.duration);
+  const time = dayjs(info.publichedAt).fromNow(true);
+  const views = formatViews(eInfo.viewCount);
+  const duration = formatTimeVideo(eInfo.duration);
 
   return (
     <div className='videoCard'>
       <Link to={`/video/${id}`} state={{...video}}>
         <div className='video_preview'>
-          <img src={id.img} alt={id.info.title} />
+          <img src={img} alt={info.title} />
           {
-            id.eInfo.duration 
+            eInfo.duration 
               ?
                 <div className='video_duration'>
                   <span>{duration}</span>
@@ -32,8 +31,8 @@ const VideoCard = (id, video) => {
         <div className='video_info_container'>
           <div className="avatar_container">
             <img 
-              src={id.img} 
-              alt={`${id.info.channelTitle} avatar`} 
+              src={img} 
+              alt={`${info.channelTitle} avatar`} 
               className='avatar'
             />
           </div>
@@ -41,15 +40,15 @@ const VideoCard = (id, video) => {
           <div className='video_text_container'>
             <h3>
               {
-                id.info.title.length > 60
-                ? (id.info.title.substring(0, 60) + '...')
-                : id.info.title
+                info.title.length > 60
+                ? (info.title.substring(0, 60) + '...')
+                : info.title
               }
             </h3>
             <div className="video_info">
-              <Link to={`/channel/${id.channelInfo.customUrl}`}>
+              <Link to={`/channel/${channelInfo.customUrl}`}>
                 <div className="channelName">
-                  {id.info.channelTitle}
+                  {info.channelTitle}
                 </div>
               </Link>
               <div className="video_metadata">
