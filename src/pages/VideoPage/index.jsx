@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import YouTube from 'react-youtube';
 import { SideBarContext } from '../../context/SideBarContext'
@@ -6,9 +6,13 @@ import { BiLike,  BiDislike } from 'react-icons/bi'
 import { RiShareForwardLine, RiFlagLine } from 'react-icons/ri'
 import { MdPlaylistAdd } from 'react-icons/md'
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import formatNumber from '../../helpers/formatNumber';
 import formatViews from '../../helpers/formatViews';
 import formatText from '../../helpers/formatText';
+import axios from '../../api/axios'
+
+dayjs.extend(relativeTime)
 
 const VideoPage = () => {  
   const { videoId } = useParams();
@@ -23,6 +27,18 @@ const VideoPage = () => {
   const subscribers = formatViews(currentVideo.channelInfo.subscriberCount);
 
   const videoDescription = formatText(currentVideo.snippet.description);
+
+  const [videoComments, setVideoComments] = useState([]);
+
+  const loadComments = useCallback(async () => {
+    setIsToggled(false);
+    const response = await axios.get(`/commentThreads?part=snippet&videoId=${videoId}`);
+    setVideoComments(response.data.items);
+  }, [setIsToggled, videoId])
+
+  useEffect(() => {
+    loadComments();
+  }, [loadComments])
 
   const onPlayerReady = (e) => {
     e.target.playVideo();
@@ -61,6 +77,39 @@ const VideoPage = () => {
       </div>
     </div>
   )
+
+  const videoCommentsMarkUp = videoComments?.map(item => {
+    const { id, snippet } = item.snippet.topLevelComment;
+    
+    return (
+      <div className="comment_container" key={id}>
+        <div className="comment_avatar_container">
+          <img src={snippet.authorProfileImageUrl} alt="user avatar" />
+        </div>
+        <div className="comment_text_container">
+          <div className="comment_author">
+            {snippet.authorDisplayName}
+            <span>
+              {dayjs(snippet.publishedAt).fromNow()}
+            </span>
+          </div>
+          <div className="comment_text">
+            {snippet.textOriginal}
+          </div>
+          <div className="commnet_buttons">
+            <div>
+              <BiLike size={16} />
+              <span className='muted'>100</span>
+            </div>
+            <div>
+              <BiDislike size={16} />
+            </div>
+            <span className='muted'>답글</span>
+          </div>
+        </div>
+      </div>
+    )
+  })
 
   return (
     <section className='videoPage'>
@@ -122,7 +171,7 @@ const VideoPage = () => {
               댓글 {comments} 개
             </div>
             <div className="video_comments">
-
+              {videoCommentsMarkUp}
             </div>
           </div>
         </div>
