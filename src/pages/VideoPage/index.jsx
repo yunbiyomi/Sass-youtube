@@ -8,6 +8,7 @@ import { MdPlaylistAdd } from 'react-icons/md'
 import dayjs from 'dayjs';
 import formatNumber from '../../helpers/formatNumber';
 import formatViews from '../../helpers/formatViews';
+import formatText from '../../helpers/formatText';
 
 const VideoPage = () => {  
   const { videoId } = useParams();
@@ -20,6 +21,8 @@ const VideoPage = () => {
 
   const likes = formatViews(currentVideo.extraInfo.likeCount);
   const subscribers = formatViews(currentVideo.channelInfo.subscriberCount);
+
+  const videoDescription = formatText(currentVideo.snippet.description);
 
   const onPlayerReady = (e) => {
     e.target.playVideo();
@@ -111,7 +114,7 @@ const VideoPage = () => {
               </div>
             </div>
             <div className="video_description">
-              {currentVideo.snippet.description}
+              {videoDescription}
             </div>
           </div>
           <div className="video_comments_container">
