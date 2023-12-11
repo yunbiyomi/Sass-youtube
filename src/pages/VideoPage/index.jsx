@@ -7,14 +7,19 @@ import { RiShareForwardLine, RiFlagLine } from 'react-icons/ri'
 import { MdPlaylistAdd } from 'react-icons/md'
 import dayjs from 'dayjs';
 import formatNumber from '../../helpers/formatNumber';
+import formatViews from '../../helpers/formatViews';
 
 const VideoPage = () => {  
   const { videoId } = useParams();
   let location = useLocation();
   const { state: currentVideo } = location;
   const { setIsToggled } = useContext(SideBarContext);
+
   const views = formatNumber(currentVideo.extraInfo.viewCount);
   const comments = formatNumber(currentVideo.extraInfo.commentCount);
+
+  const likes = formatViews(currentVideo.extraInfo.likeCount);
+  const subscribers = formatViews(currentVideo.channelInfo.subscriberCount);
 
   const onPlayerReady = (e) => {
     e.target.playVideo();
@@ -67,11 +72,10 @@ const VideoPage = () => {
               <div className='likes_container'>
                 <div className='likes'>
                   <BiLike size={25} />
-                  <span>좋아요</span>
+                  <span>{likes}</span>
                 </div>
                 <div className='dislikes'>
                   <BiDislike size={25} />
-                  <span>싫어요</span>
                 </div>
                 <div className='share'>
                   <RiShareForwardLine size={25} />
@@ -97,7 +101,7 @@ const VideoPage = () => {
                   {currentVideo.channelInfo.title}
                 </a>
                 <span>
-                  구독자 {currentVideo.channelInfo.subscriberCount}명
+                  구독자 {subscribers}명
                 </span>
               </div>
               <div className="channel_subscribe">

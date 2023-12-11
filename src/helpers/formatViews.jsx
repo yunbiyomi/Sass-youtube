@@ -1,8 +1,8 @@
 const formatViews = num => {
   if(num > 999 && num < 1000000) 
-    return (num/1000).toFixed(0) + 'K';
+    return (num/1000).toFixed(0) + '천';
   else if(num > 1000000)
-    return (num/1000000).toFixed(0) + 'M';
+    return (num/1000000).toFixed(0) + '만';
   else if(num < 900)
     return num;
 }
