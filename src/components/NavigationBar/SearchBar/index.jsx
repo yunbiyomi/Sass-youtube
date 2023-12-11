@@ -5,17 +5,19 @@ import { Tooltip } from 'react-tooltip'
 import useWindowSize from '../../../helpers/useWindowSize'
 import { SearchContext } from '../../../context/SearchContext'
 
-const SearchBar = () => {
+
+// eslint-disable-next-line react/prop-types
+const SearchBar = ({ onChange, onSubmit }) => {
   const { width } = useWindowSize();
-  const { setShowSpecialSearchBar } = useContext(SearchContext);
+  const { searchQuery, setShowSpecialSearchBar } = useContext(SearchContext);
 
   return (
     <div className={`SearchBar ${width <= 640 ? 'smallSearch' : ''}`}>
       {
         width > 640 ?
         (
-          <form>
-            <input type='text' name='search' placeholder='검색' autoComplete='false'/>
+          <form onSubmit={onSubmit}>
+            <input type='text' name='search' value={searchQuery.input} onChange={onChange} placeholder='검색' autoComplete='false'/>
             <button type='submit'>
             <ImSearch size={20} data-tooltip-content='검색' data-tooltip-id='navbar'/>
             </button>
