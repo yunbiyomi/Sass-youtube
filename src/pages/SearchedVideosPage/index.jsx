@@ -33,7 +33,7 @@ const SearchedVideosPage = () => {
   ))
 
   return (
-    <section>
+    <section className='searchedVideos'>
       {searchedVideosMarkup}
     </section>
   )
